@@ -1,5 +1,4 @@
 
-
 public class Tester
 {
     public static void main(String[] args)
@@ -9,7 +8,8 @@ public class Tester
         sam.add("Yello");
         sam.add("Nope");
         sam.print();
+        System.out.println(MyMath.arcarccos(200));
     }
 
-
+    double pi = Math.PI;
 }
