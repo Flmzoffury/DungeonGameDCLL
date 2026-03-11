@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Monster implements GameElement
+public class Monster implements GameElement, PlayerInteractable
 {
     int health;
     int attack;
@@ -46,5 +46,10 @@ public class Monster implements GameElement
     public String toString()
     {
         return typeName;
+    }
+
+    public Object interact(Player inputPlayer)
+    {
+        return null;
     }
 }

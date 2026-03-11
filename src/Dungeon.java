@@ -5,9 +5,12 @@ public class Dungeon
     Random randomizer;
     SamDCLL<Room> rooms;
     int dungeonLength;
+    boolean dungeonFinished;
 
     public Dungeon()
     {
+        dungeonFinished = false;
+
         randomizer = new Random();
 
         rooms = new SamDCLL<Room>();
@@ -76,5 +79,45 @@ public class Dungeon
          }
 
          this.insert(inputMonster);
+    }
+
+    public void playerMoveLeft()
+    {
+        Node<Room> myPlayerRoom = this.findPlayer();
+        Node<Room> myLeftRoom = myPlayerRoom.getPrevNode();
+
+        if (myLeftRoom.getData().getObj() == null)
+        {
+            myLeftRoom.getData().setObj(myPlayerRoom.getData().getObj());
+            myPlayerRoom.getData().setObj(null);
+        }
+        else if (myLeftRoom.getData().getObj() instanceof Exit)
+        {
+            dungeonFinished = true;
+        }
+        /*
+        else if (myLeftRoom.getData().getObj() instanceof Exit) @todo monster interaction + remove monster room from room altogether
+        {
+        }
+        else if (myLeftRoom.getData().getObj() instanceof Treasure) @todo treasure interaction + removal
+        {
+        }
+         */
+
+    }
+
+    private Node<Room> findPlayer()
+    {
+        Node<Room> tempNode = rooms.getHead();
+        while (!(tempNode.getData().getObj() instanceof Player))
+        {
+            tempNode = tempNode.getNextNode();
+        }
+        return tempNode;
+    }
+
+    public boolean getFinished()
+    {
+        return dungeonFinished;
     }
 }
