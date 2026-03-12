@@ -25,11 +25,16 @@ public class GamePlay
         //Player Event Input Handle
         String playerAction;
 
+        //Floor Counter
+        int floorCount = 0;
+
+        //Dungeon
+        Dungeon myDungeon = new Dungeon();
+
         //Primary Gameloop
         while (inGame) {
             if (setupPhase == true) {
-                Dungeon myDungeon = new Dungeon();
-
+                myDungeon = new Dungeon();
                 myDungeon.insert(new Exit());
                 myDungeon.insert(new Player(charName));
 
@@ -44,27 +49,51 @@ public class GamePlay
                     }
                 }
 
-                myDungeon.print();
                 setupPhase = false;
             }
+            //Dungeon display
+            myDungeon.print();
 
             //Player input
-
             System.out.println("\nWhat do you want to do? Type H for help.");
             playerAction = inputReader.nextLine().toUpperCase();
 
             if (playerAction.equals("H"))
             {
                 System.out.println("Possible Actions:\nType \"L\" to move left on the floor.\nType \"R\" to move right on the floor.");
+                System.out.println("Type STATS to see your stats.");
             }
             else if (playerAction.equals("L"))
             {
-
+                myDungeon.playerMoveLeft();
             }
             else if (playerAction.equals("R"))
             {
+                myDungeon.playerMoveRight();
+            }
+            else if (playerAction.equals("STATS"))
+            {
+                myDungeon.printPlayerStats();
+            }
 
+
+            //Dungeon Finish Flag Check
+            if (myDungeon.getFinished())
+            {
+                floorCount++;
+                System.out.println("Floor completed! Continue? Y/N");
+                playerAction = inputReader.nextLine().toUpperCase();
+                if (playerAction.equals("Y"))
+                {
+                    setupPhase = true;
+                }
+                else
+                {
+                    inGame = false;
+                }
             }
         }
+        System.out.println("Thank you for playing!");
+        System.out.println("You completed " + floorCount + " floors!");
     }
 }

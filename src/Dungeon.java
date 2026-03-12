@@ -106,6 +106,30 @@ public class Dungeon
 
     }
 
+    public void playerMoveRight()
+    {
+        Node<Room> myPlayerRoom = this.findPlayer();
+        Node<Room> myRightRoom = myPlayerRoom.getNextNode();
+
+        if (myRightRoom.getData().getObj() == null)
+        {
+            myRightRoom.getData().setObj(myPlayerRoom.getData().getObj());
+            myPlayerRoom.getData().setObj(null);
+        }
+        else if (myRightRoom.getData().getObj() instanceof Exit)
+        {
+            dungeonFinished = true;
+        }
+        /*
+        else if (myLeftRoom.getData().getObj() instanceof Exit) @todo monster interaction + remove monster room from room altogether
+        {
+        }
+        else if (myLeftRoom.getData().getObj() instanceof Treasure) @todo treasure interaction + removal
+        {
+        }
+         */
+    }
+
     private Node<Room> findPlayer()
     {
         Node<Room> tempNode = rooms.getHead();
@@ -119,5 +143,15 @@ public class Dungeon
     public boolean getFinished()
     {
         return dungeonFinished;
+    }
+
+    public void printPlayerStats()
+    {
+        Object myPlayer = this.findPlayer().getData().getObj();
+        if (myPlayer instanceof Player)
+        {
+            Player tempPlayer = (Player) myPlayer;
+            tempPlayer.printStats();
+        }
     }
 }

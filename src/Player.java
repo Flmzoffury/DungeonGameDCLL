@@ -1,14 +1,17 @@
-public class Player
+public class Player extends LivingBeing implements GameElement
 {
-    String name;
-
     public Player(String inputName)
     {
-        name = inputName;
+        super(100, 40, 5, inputName);
     }
 
-    public String toString()
+
+
+    public void fight(Object inputObj)
     {
-        return name;
+        if (inputObj instanceof Monster)
+        {
+
+        }
     }
 }

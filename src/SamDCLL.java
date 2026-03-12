@@ -33,13 +33,6 @@ public class SamDCLL<T>
             tail = tail.getNextNode();
             tail.setNextNode(head);
             head.setPrevNode(tail);
-
-            /*
-            Node<T> tempPrev = tail.getPrevNode();
-            tail.setPrevNode(new Node<T>(inputData));
-            tail.getPrevNode().setNextNode(tail);
-            tail.getPrevNode().setPrevNode(tempPrev);
-            tempPrev.setNextNode(tail.getPrevNode());*/
         }
         size++;
     }
