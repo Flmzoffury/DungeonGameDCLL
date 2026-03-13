@@ -53,6 +53,15 @@ public class SamDCLL<T>
 
     }
 
+    public void removeNode(Node<T> inputNode)
+    {
+        Node<T> leftNode = inputNode.getPrevNode();
+        Node<T> rightNode = inputNode.getNextNode();
+        leftNode.setNextNode(rightNode);
+        rightNode.setPrevNode(leftNode);
+        size--;
+    }
+
     public Node<T> getHead()
     {
         return head;
@@ -62,6 +71,4 @@ public class SamDCLL<T>
     {
         return size;
     }
-
-
 }

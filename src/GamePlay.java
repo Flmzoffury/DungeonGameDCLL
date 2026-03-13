@@ -77,7 +77,7 @@ public class GamePlay
             }
 
 
-            //Dungeon Finish Flag Check
+            //Dungeon Flag Checks
             if (myDungeon.getFinished())
             {
                 floorCount++;
@@ -91,6 +91,11 @@ public class GamePlay
                 {
                     inGame = false;
                 }
+            }
+            else if (myDungeon.getLost())
+            {
+                System.out.println("You have lost! Game over.");
+                inGame = false;
             }
         }
         System.out.println("Thank you for playing!");

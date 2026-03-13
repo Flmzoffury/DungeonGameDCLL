@@ -6,15 +6,21 @@ public class Dungeon
     SamDCLL<Room> rooms;
     int dungeonLength;
     boolean dungeonFinished;
+    boolean gameLost;
 
     public Dungeon()
     {
+        //Game Flags
+        gameLost = false;
         dungeonFinished = false;
 
+        //Randomizer Object
         randomizer = new Random();
 
+        //DCLL of Rooms
         rooms = new SamDCLL<Room>();
 
+        //Randomizer for dungeon size;
         dungeonLength = 8 + randomizer.nextInt(6);
 
         for (int i = 0; i < dungeonLength; i++)
@@ -95,10 +101,22 @@ public class Dungeon
         {
             dungeonFinished = true;
         }
-        /*
-        else if (myLeftRoom.getData().getObj() instanceof Exit) @todo monster interaction + remove monster room from room altogether
+        else if (myLeftRoom.getData().getObj() instanceof Monster)
         {
+            Player myPlayer = (Player) myPlayerRoom.getData().getObj();
+            Monster myMonster = (Monster) myLeftRoom.getData().getObj();
+            myPlayer.fight(myMonster);
+            if (!myMonster.getAlive())
+            {
+                rooms.removeNode(myLeftRoom);
+                dungeonLength--;
+            }
+            else if (!myPlayer.getAlive())
+            {
+                gameLost = true;
+            }
         }
+        /*
         else if (myLeftRoom.getData().getObj() instanceof Treasure) @todo treasure interaction + removal
         {
         }
@@ -120,10 +138,18 @@ public class Dungeon
         {
             dungeonFinished = true;
         }
-        /*
-        else if (myLeftRoom.getData().getObj() instanceof Exit) @todo monster interaction + remove monster room from room altogether
+        else if (myRightRoom.getData().getObj() instanceof Monster)
         {
+            Player myPlayer = (Player) myPlayerRoom.getData().getObj();
+            Monster myMonster = (Monster) myRightRoom.getData().getObj();
+            myPlayer.fight(myMonster);
+            if (!myMonster.getAlive())
+            {
+                rooms.removeNode(myRightRoom);
+                dungeonLength--;
+            }
         }
+        /*
         else if (myLeftRoom.getData().getObj() instanceof Treasure) @todo treasure interaction + removal
         {
         }
@@ -143,6 +169,11 @@ public class Dungeon
     public boolean getFinished()
     {
         return dungeonFinished;
+    }
+
+    public boolean getLost()
+    {
+        return gameLost;
     }
 
     public void printPlayerStats()
