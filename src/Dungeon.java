@@ -2,13 +2,16 @@ import java.util.Random;
 
 public class Dungeon
 {
-    Random randomizer;
-    SamDCLL<Room> rooms;
-    int dungeonLength;
-    boolean dungeonFinished;
-    boolean gameLost;
+    private Random randomizer;
+    private SamDCLL<Room> rooms;
 
-    public Dungeon()
+    private int dungeonLength;
+    private int dungeonLevel;
+
+    private boolean dungeonFinished;
+    private boolean gameLost;
+
+    public Dungeon(int inputLevel)
     {
         //Game Flags
         gameLost = false;
@@ -20,8 +23,11 @@ public class Dungeon
         //DCLL of Rooms
         rooms = new SamDCLL<Room>();
 
+        //Assign Level
+        dungeonLevel = inputLevel;
+
         //Randomizer for dungeon size;
-        dungeonLength = 8 + randomizer.nextInt(6);
+        dungeonLength = 8 + randomizer.nextInt(6) + dungeonLevel;
 
         for (int i = 0; i < dungeonLength; i++)
         {
@@ -40,6 +46,10 @@ public class Dungeon
         return dungeonLength;
     }
 
+    /**
+     * Inserts a object into a random dungeon room
+     * @param inputObject The object to be inserted into the dungeon room
+     */
     public void insert(Object inputObject)
     {
         boolean inserted = false;
@@ -62,6 +72,9 @@ public class Dungeon
         }
     }
 
+    /**
+     * Inserts a random monster
+     */
     public void insertMonster()
     {
          Monster inputMonster;
@@ -87,21 +100,61 @@ public class Dungeon
          this.insert(inputMonster);
     }
 
+    /**
+     * Inserts a random treasure type with random stats
+     */
+    public void insertTreasure()
+    {
+        Treasure inputTreasure;
+        int randTre = randomizer.nextInt(4);
+
+        if (randTre == 0)
+        {
+            inputTreasure = new Trap((randomizer.nextInt(3)+dungeonLevel+1)*5);
+        }
+        else if (randTre == 1 || randTre == 2)
+        {
+            inputTreasure = new Potion((randomizer.nextInt(3)+dungeonLevel+1)*10);
+        }
+        else
+        {
+            int randType = randomizer.nextInt(3);
+            String equipName;
+
+            if (randType == 0)
+            {
+                equipName = "Gauntlet";
+            }
+            else if (randType == 1)
+            {
+                equipName = "Blade";
+            }
+            else if (randType == 2)
+            {
+                equipName = "Charm";
+            }
+
+            inputTreasure = new Equipment((randomizer.nextInt(3)+dungeonLevel+1)*5,(randomizer.nextInt(3)+dungeonLevel+1)*5,"Sword");
+        }
+
+        insert(inputTreasure);
+    }
+
     public void playerMoveLeft()
     {
         Node<Room> myPlayerRoom = this.findPlayer();
         Node<Room> myLeftRoom = myPlayerRoom.getPrevNode();
 
-        if (myLeftRoom.getData().getObj() == null)
+        if (myLeftRoom.getData().getObj() == null) //Interact with empty room
         {
             myLeftRoom.getData().setObj(myPlayerRoom.getData().getObj());
             myPlayerRoom.getData().setObj(null);
         }
-        else if (myLeftRoom.getData().getObj() instanceof Exit)
+        else if (myLeftRoom.getData().getObj() instanceof Exit) //Interact with exit
         {
             dungeonFinished = true;
         }
-        else if (myLeftRoom.getData().getObj() instanceof Monster)
+        else if (myLeftRoom.getData().getObj() instanceof Monster) //Interact with monster
         {
             Player myPlayer = (Player) myPlayerRoom.getData().getObj();
             Monster myMonster = (Monster) myLeftRoom.getData().getObj();
@@ -116,11 +169,16 @@ public class Dungeon
                 gameLost = true;
             }
         }
-        /*
-        else if (myLeftRoom.getData().getObj() instanceof Treasure) @todo treasure interaction + removal
+        else if (myLeftRoom.getData().getObj() instanceof Treasure) //Interact with treasure
         {
+            Player myPlayer = (Player) myPlayerRoom.getData().getObj();
+            Treasure myTreasure = (Treasure) myLeftRoom.getData().getObj();
+
+            myTreasure.interact(myPlayer);
+
+            myPlayerRoom.getData().setObj(null);
+            myLeftRoom.getData().setObj(myPlayer);
         }
-         */
 
     }
 
@@ -149,11 +207,17 @@ public class Dungeon
                 dungeonLength--;
             }
         }
-        /*
-        else if (myLeftRoom.getData().getObj() instanceof Treasure) @todo treasure interaction + removal
+        else if (myRightRoom.getData().getObj() instanceof Treasure)
         {
+            Player myPlayer = (Player) myPlayerRoom.getData().getObj();
+            Treasure myTreasure = (Treasure) myRightRoom.getData().getObj();
+
+            myTreasure.interact(myPlayer);
+
+            myPlayerRoom.getData().setObj(null);
+            myRightRoom.getData().setObj(myPlayer);
         }
-         */
+
     }
 
     private Node<Room> findPlayer()
