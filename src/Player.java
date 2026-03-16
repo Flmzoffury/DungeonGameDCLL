@@ -3,11 +3,13 @@ import java.util.ArrayList;
 public class Player extends LivingBeing implements GameElement
 {
     private ArrayList<Equipment> inventory;
+    private int xp;
 
     public Player(String inputName)
     {
         super(100, 40, 5, inputName);
         inventory = new ArrayList<Equipment>();
+        xp = 0;
     }
 
     public void fight(Object inputObj)
