@@ -82,19 +82,19 @@ public class Dungeon
 
          if (randMon == 0)
          {
-             inputMonster = new OrcGrunt();
+             inputMonster = new OrcGrunt(dungeonLevel);
          }
          else if (randMon == 1)
          {
-             inputMonster = new OrcRaider();
+             inputMonster = new OrcRaider(dungeonLevel);
          }
          else if (randMon == 2)
          {
-             inputMonster = new OrcSorcerer();
+             inputMonster = new OrcSorcerer(dungeonLevel);
          }
          else
          {
-             inputMonster = new OrcBrute();
+             inputMonster = new OrcBrute(dungeonLevel);
          }
 
          this.insert(inputMonster);
