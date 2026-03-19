@@ -1,16 +1,41 @@
 import java.util.Random;
 
+/**
+ * The class contains a Doubly Circularly Linked List representing the rooms of the circular dungeon.
+ */
 public class Dungeon
 {
+    /**
+     * Randomizer used for rng
+     */
     private Random randomizer;
+    /**
+     * DCLL representing dungeon
+     */
     private SamDCLL<Room> rooms;
 
+    /**
+     * The # of rooms in the dungeon
+     */
     private int dungeonLength;
+    /**
+     * The level of the dungeon
+     */
     private int dungeonLevel;
 
+    /**
+     * Flag representing if the dungeon has been completed
+     */
     private boolean dungeonFinished;
+    /**
+     * Flag representing if the player has lost all health
+     */
     private boolean gameLost;
 
+    /**
+     * Constructor for the dungeon creates all rooms in the dungeon
+     * @param inputLevel Decides the level of the dungeon
+     */
     public Dungeon(int inputLevel)
     {
         //Game Flags
@@ -36,21 +61,28 @@ public class Dungeon
         }
     }
 
+    /**
+     * Prints all rooms of the dungeon and their contents
+     */
     public void print()
     {
         rooms.print();
     }
 
+    /**
+     * Returns the dungeon length
+     * @return The number of rooms in the dungeon
+     */
     public int getLength()
     {
         return dungeonLength;
     }
 
     /**
-     * Inserts a object into a random dungeon room
+     * Inserts a object into a random dungeon room not already containing an object
      * @param inputObject The object to be inserted into the dungeon room
      */
-    public void insert(Object inputObject)
+    public void insert(Object inputObject) //Note: this breaks when trying to insert objects when no rooms are available
     {
         boolean inserted = false;
         Node<Room> tempRoom = rooms.getHead();
@@ -73,7 +105,7 @@ public class Dungeon
     }
 
     /**
-     * Inserts a random monster
+     * Inserts a random monster type
      */
     public void insertMonster()
     {
@@ -140,6 +172,9 @@ public class Dungeon
         insert(inputTreasure);
     }
 
+    /**
+     * Checks the room to the left of the player and interacts with it
+     */
     public void playerMoveLeft()
     {
         Node<Room> myPlayerRoom = this.findPlayer();
@@ -182,6 +217,9 @@ public class Dungeon
 
     }
 
+    /**
+     * Checks the room to the right of the player and interacts with it
+     */
     public void playerMoveRight()
     {
         Node<Room> myPlayerRoom = this.findPlayer();
@@ -220,6 +258,10 @@ public class Dungeon
 
     }
 
+    /**
+     * Finds the Node containing the room containing the player
+     * @return The Node<Room> containing the player
+     */
     private Node<Room> findPlayer()
     {
         Node<Room> tempNode = rooms.getHead();
@@ -230,16 +272,27 @@ public class Dungeon
         return tempNode;
     }
 
+    /**
+     * Returns the dungeonFinished flag
+     * @return If the dungeon is finished
+     */
     public boolean getFinished()
     {
         return dungeonFinished;
     }
 
+    /**
+     * Returns the gameLost flag
+     * @return If the dungeon is lost
+     */
     public boolean getLost()
     {
         return gameLost;
     }
 
+    /**
+     * Prints the Player's stats
+     */
     public void printPlayerStats()
     {
         Object myPlayer = this.findPlayer().getData().getObj();

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/CircLL.iml" filepath="$PROJECT_DIR$/CircLL.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DungeonDCLL.iml" filepath="$PROJECT_DIR$/DungeonDCLL.iml" />
     </modules>
   </component>
 </project>
