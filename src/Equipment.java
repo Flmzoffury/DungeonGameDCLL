@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Equipment extends Treasure
 {
+
     int attackBoost;
     int speedBoost;
     String name;

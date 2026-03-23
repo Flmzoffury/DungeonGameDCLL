@@ -14,51 +14,28 @@ public class GamePlay
      * static method to play the dungeon-crawler
      * @param args
      */
+
     public static void main(String[] args)
     {
+        GameControl myGame = new GameControl();
+
         //Initial Flags
         boolean inGame = true;
         boolean setupPhase = true;
 
-        //Accessing Import Classes
-        Random randomizer = new Random();
-        Scanner inputReader = new Scanner(System.in);
-
-        //User Setup
-        System.out.println("Enter Your Character's Name: ");
-        String charName = inputReader.nextLine();
-
-        //Player Event Input Handle
-        String playerAction;
+        //Set-up Player
+        myGame.getPlayerName();
 
         //Floor Counter
         int floorCount = 0;
-
-        //Dungeon
-        Dungeon myDungeon = new Dungeon(0);
 
         //Primary Gameloop
         while (inGame) {
 
             //Set-up for new dungeon
-            if (setupPhase == true) {
-
-                myDungeon = new Dungeon(floorCount);
-                myDungeon.insert(new Exit());
-                myDungeon.insert(new Player(charName));
-
-                int randRoomType;
-
-                for (int i = 0; i < ((myDungeon.getLength() - 2) / 2); i++) {
-                    randRoomType = randomizer.nextInt(3);
-                    if (randRoomType == 0) {
-                        myDungeon.insertMonster();
-                    }
-                    else if (randRoomType == 1) {
-                        myDungeon.insertTreasure();
-                    }
-                }
-
+            if (setupPhase)
+            {
+                myGame.genDungeon();
                 setupPhase = false;
             }
 
@@ -66,38 +43,16 @@ public class GamePlay
             System.out.println("_______________________________________________________");
 
             //Dungeon display
-            myDungeon.print();
+            myGame.printDungeon();
 
             //Player input
-            System.out.println("\nWhat do you want to do? Type H for help.");
-            playerAction = inputReader.nextLine().toUpperCase();
-
-            //Player actions
-            if (playerAction.equals("H"))
-            {
-                System.out.println("Possible Actions:\nType \"L\" to move left on the floor.\nType \"R\" to move right on the floor.");
-                System.out.println("Type STATS to see your stats.");
-            }
-            else if (playerAction.equals("L"))
-            {
-                myDungeon.playerMoveLeft();
-            }
-            else if (playerAction.equals("R"))
-            {
-                myDungeon.playerMoveRight();
-            }
-            else if (playerAction.equals("STATS"))
-            {
-                myDungeon.printPlayerStats();
-            }
+            myGame.takePlayerInput();
 
             //Dungeon Flag Checks
-            if (myDungeon.getFinished())
+            if (myGame.getFinished())
             {
                 floorCount++;
-                System.out.println("Floor completed! Continue? Y/N");
-                playerAction = inputReader.nextLine().toUpperCase();
-                if (playerAction.equals("Y"))
+                if (myGame.getPlayerContinue())
                 {
                     setupPhase = true;
                 }
@@ -106,7 +61,7 @@ public class GamePlay
                     inGame = false;
                 }
             }
-            else if (myDungeon.getLost())
+            else if (myGame.getLost())
             {
                 System.out.println("You have lost! Game over.");
                 inGame = false;

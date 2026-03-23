@@ -1,5 +1,6 @@
 public class LivingBeing implements GameElement
 {
+
     private int health;
     private int attack;
     private int speed;

@@ -1,5 +1,6 @@
 public class Exit implements GameElement
 {
+
     public Exit()
     {
 

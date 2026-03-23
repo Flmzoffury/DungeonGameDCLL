@@ -5,6 +5,7 @@ import java.util.Random;
  */
 public class Dungeon
 {
+
     /**
      * Randomizer used for rng
      */
