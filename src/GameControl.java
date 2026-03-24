@@ -1,19 +1,39 @@
 import java.util.Scanner;
 import java.util.Random;
 
+/**
+ * Class to handle events in the gameplay loopp
+ */
 public class GameControl
 {
+    /**
+     * The current input by the player
+     */
     private String playerInput;
+    /**
+     * Theh name of the player
+     */
     private String playerName;
-
+    /**
+     * Scanner to read player input
+     */
     private Scanner textInput;
-
+    /**
+     * RNG
+     */
     private Random randGen;
-
+    /**
+     * The dungeon in the game
+     */
     private Dungeon dungeon;
-
+    /**
+     * The number of completed floors
+     */
     private int floorCount;
 
+    /**
+     * Initializes textInput, randGen, and floorCount
+     */
     public GameControl()
     {
         textInput = new Scanner(System.in);
@@ -21,6 +41,9 @@ public class GameControl
         floorCount = 0;
     }
 
+    /**
+     * Generates the dungeon
+     */
     public void genDungeon()
     {
         dungeon = new Dungeon(floorCount);
@@ -40,6 +63,9 @@ public class GameControl
         }
     }
 
+    /**
+     * Takes player input for the main actions
+     */
     public void takePlayerInput()
     {
         System.out.println("\nWhat do you want to do? Type H for help.");
@@ -65,27 +91,45 @@ public class GameControl
         }
     }
 
+    /**
+     * Prompts the player to type in a name
+     */
     public void getPlayerName()
     {
         System.out.println("Name your Character: ");
         playerName = textInput.nextLine();
     }
 
+    /**
+     * Prints out the dungeon
+     */
     public void printDungeon()
     {
         dungeon.print();
     }
 
+    /**
+     * Returns if the dungeon is finished or not
+     * @return dungeon.getFinished()
+     */
     public boolean getFinished()
     {
         return dungeon.getFinished();
     }
 
+    /**
+     * Returns if the dungeon has been lost or not
+     * @return dungeon.getLost()
+     */
     public boolean getLost()
     {
         return dungeon.getLost();
     }
 
+    /**
+     * Prompts the player to continue or not
+     * @return if the player wants to continue or not
+     */
     public boolean getPlayerContinue()
     {
         System.out.println("Floor completed! Continue? Y/N");

@@ -39,13 +39,12 @@ public class GamePlay
                 setupPhase = false;
             }
 
-            //Seperate Text from Each Loop
-            System.out.println("_______________________________________________________");
-
             //Dungeon display
+            System.out.println("_______________________________________________________");
             myGame.printDungeon();
 
             //Player input
+            System.out.println("_______________________________________________________");
             myGame.takePlayerInput();
 
             //Dungeon Flag Checks
