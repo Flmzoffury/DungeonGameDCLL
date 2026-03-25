@@ -1,17 +1,31 @@
 import java.util.ArrayList;
 
+/**
+ * Subclass of LivingBeing that represents the player characted
+ */
 public class Player extends LivingBeing implements GameElement
 {
+    /**
+     * The equipment inventory of the player
+     */
     private ArrayList<Equipment> inventory;
-    private int xp;
+    //private int xp;
 
+    /**
+     * Constructs the player using sets stats and a player input name
+     * @param inputName The player's name
+     */
     public Player(String inputName)
     {
         super(100, 40, 5, inputName);
         inventory = new ArrayList<Equipment>();
-        xp = 0;
+        //xp = 0;
     }
 
+    /**
+     * If the input is a monster, it fights the monster
+     * @param inputObj The object to be fought
+     */
     public void fight(Object inputObj)
     {
         if (inputObj instanceof Monster)
@@ -53,6 +67,9 @@ public class Player extends LivingBeing implements GameElement
         }
     }
 
+    /**
+     * Prints out the inventory of the player
+     */
     public void printInv()
     {
         System.out.println("Inventory:");
@@ -63,6 +80,10 @@ public class Player extends LivingBeing implements GameElement
         System.out.println("");
     }
 
+    /**
+     * Equips a piece of equipment to the player
+     * @param inputEquipment The equipment to be equipped
+     */
     public void equip(Equipment inputEquipment)
     {
         this.setAttack(this.getAttack()+inputEquipment.getAttackBoost());
