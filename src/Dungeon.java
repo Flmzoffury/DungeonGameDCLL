@@ -242,6 +242,7 @@ public class Dungeon
             myPlayer.fight(myMonster);
             if (!myMonster.getAlive())
             {
+                System.out.println("MONSTER REMOVED");
                 rooms.removeNode(myRightRoom);
                 dungeonLength--;
             }
@@ -288,7 +289,7 @@ public class Dungeon
      */
     public boolean getLost()
     {
-        return gameLost;
+        return !((Player) findPlayer().getData().getObj()).getAlive();
     }
 
     /**

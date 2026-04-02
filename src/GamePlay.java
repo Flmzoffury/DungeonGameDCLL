@@ -47,6 +47,13 @@ public class GamePlay
             System.out.println("_______________________________________________________");
             myGame.takePlayerInput();
 
+            /*
+            for (int i = 0; i < 20; i++)
+            {
+                System.out.println();
+            }
+            */
+
             //Dungeon Flag Checks
             if (myGame.getFinished())
             {
