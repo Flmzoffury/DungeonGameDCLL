@@ -3,7 +3,7 @@ import java.util.Random;
 /**
  * Subclass of Living being that specifies the being as an enemy monster
  */
-public class Monster extends LivingBeing implements GameElement
+public class Monster extends LivingBeing
 {
     /**
      * Utilizes the superclasses constructor
